@@ -17,7 +17,7 @@ provider "aws" {
 }
 
 module "task01" {
-  source = "./modules/task01_m"
+  source = "./module"
   tags = {
     Name       = "task01_module"
     First_name = "Semen"

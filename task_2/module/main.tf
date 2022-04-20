@@ -19,15 +19,16 @@ resource "aws_key_pair" "ssh_key" {
   public_key = var.ssh_public_key.value
 }
 
-resource "aws_instance" "task-01-instance" {
+resource "aws_instance" "instance" {
+  count         = var.instance_count
   instance_type = var.instance_type
   ami           = data.aws_ami.amzn_ami.id
   tags = merge(var.tags, {
+    Name          = "task02-${count.index}"
     Date_creation = timestamp(),
     OS_type       = data.aws_ami.amzn_ami.platform_details
     Account_id    = data.aws_caller_identity.current.account_id
   })
-
   key_name = aws_key_pair.ssh_key.key_name
   connection {
     type        = "ssh"

@@ -1,3 +1,9 @@
+variable "region" {
+  description = "region"
+  type        = string
+  default     = "us-east-1"
+}
+
 variable "ssh_public_key" {
   description = "value"
   type        = map
@@ -27,4 +33,10 @@ variable "private_key_path" {
   description = "id.rsa private part of a key pair for provisioned remote-exec connection"
   type        = string
   default     = "~/.ssh/id_rsa"
+}
+
+variable "instance_count" {
+  description = "instance count"
+  type        = number
+  default     = 1
 }

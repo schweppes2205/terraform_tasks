@@ -1,7 +1,7 @@
 # Notes
 Terraform version - 0.13.7
 
-# 1. Create a resource that is a VM (t2.micro) in the OI sandbox:
+# 1. Create a resource that is a VM (t2.micro) in the OI sandbox
 
 ## Success criteria:
 
@@ -24,3 +24,12 @@ Terraform version - 0.13.7
 - [What is 'state' file.](https://www.terraform.io/docs/state/index.html)
 - [Backend to store .tf files remotely.](https://www.terraform.io/docs/backends/index.html)
 - [Provisioners](https://www.terraform.io/language/resources/provisioners/syntax)
+
+# 2. High-level overview of Terraform and the IAD pipeline
+
+Continue doing the previous task:
+- Make VM creation as a Terraform module.
+- Configure the S3 backend for Terraform to store state files (need to create your own bucket)
+- Use .tfvars file to specify variables there (aws keys, instance type, subnet ids, etc.). So remove all hard-coded values from the code. 
+- Also, use count for the resource as a variable, so we can create a module without resources. It can be used in complex components where we need to create resources by the condition.
+- Create outputs for the instance (instance ID, private IP, public IP).
