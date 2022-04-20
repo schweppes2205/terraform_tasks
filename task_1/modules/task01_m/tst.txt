@@ -1,0 +1,1 @@
+Hello. I'm a local file that should be copied to remote instance.
