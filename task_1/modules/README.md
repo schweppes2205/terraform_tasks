@@ -1,7 +1,7 @@
 # Notes
 Terraform version - 0.13.7
 
-# 1. Create a resource that is a VM (t2.micro) in the OI sandbox:
+# Create a resource that is a VM (t2.micro) in the OI sandbox:
 
 ## Success criteria:
 
