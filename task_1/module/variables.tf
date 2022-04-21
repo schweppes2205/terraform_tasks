@@ -23,9 +23,7 @@ variable "tags" {
   description = "tags"
   type        = map
   default = {
-    Name       = "test_instance"
-    First_name = "Semen"
-    Last_name  = "Shvets"
+    Name = "test_instance"
   }
 }
 

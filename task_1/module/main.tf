@@ -23,9 +23,8 @@ resource "aws_instance" "task-01-instance" {
   instance_type = var.instance_type
   ami           = data.aws_ami.amzn_ami.id
   tags = merge(var.tags, {
-    Date_creation = timestamp(),
     OS_type       = data.aws_ami.amzn_ami.platform_details
-    Account_id    = data.aws_caller_identity.current.account_id
+    Date_creation = timestamp()
   })
   key_name = aws_key_pair.ssh_key.key_name
   connection {
