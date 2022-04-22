@@ -17,11 +17,14 @@ provider "aws" {
 }
 
 module "task02" {
-  source           = "./module"
-  region           = var.region
-  tags             = var.tags
-  instance_type    = var.instance_type
-  ssh_public_key   = var.ssh_public_key
-  private_key_path = var.private_key_path
-  instance_count   = var.instance_count
+  source            = "./module"
+  region            = var.region
+  vpc_id            = var.vpc_id
+  availability_zone = var.availability_zone
+  ami_search_param  = var.ami_search_param
+  ssh_public_key    = var.ssh_public_key
+  instance_type     = var.instance_type
+  tags              = var.tags
+  private_key_path  = var.private_key_path
+  instance_count    = var.instance_count
 }

@@ -3,8 +3,27 @@ variable "region" {
   type        = string
 }
 
-variable "tags" {
-  description = "tags"
+variable "vpc_id" {
+  description = "vpc to place an EC2 instance"
+  type        = string
+}
+
+variable "availability_zone" {
+  description = "AZ to place an EC2 instance"
+  type        = string
+}
+
+variable "ami_search_param" {
+  description = "ami image search params"
+  type = object({
+    most_recent = bool
+    name_regex  = string
+    owners      = list(string)
+  })
+}
+
+variable "ssh_public_key" {
+  description = "value"
   type        = map
 }
 
@@ -13,8 +32,8 @@ variable "instance_type" {
   type        = string
 }
 
-variable "ssh_public_key" {
-  description = "value"
+variable "tags" {
+  description = "tags"
   type        = map
 }
 

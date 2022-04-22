@@ -4,6 +4,32 @@ variable "region" {
   default     = "us-east-1"
 }
 
+variable "vpc_id" {
+  description = "vpc to place an EC2 instance"
+  type        = string
+  default     = "vpc-00dc32518740e437f"
+}
+
+variable "availability_zone" {
+  description = "AZ to place an EC2 instance"
+  type        = string
+  default     = "us-east-1b"
+}
+
+variable "ami_search_param" {
+  description = "ami image search params"
+  type = object({
+    most_recent = bool
+    name_regex  = string
+    owners      = list(string)
+  })
+  default = {
+    most_recent = true
+    name_regex  = "amzn2-ami-kernel"
+    owners      = ["amazon"]
+  }
+}
+
 variable "ssh_public_key" {
   description = "value"
   type        = map
@@ -22,9 +48,7 @@ variable "instance_type" {
 variable "tags" {
   description = "tags"
   type        = map
-  default = {
-    Name = "test_instance"
-  }
+  default     = {}
 }
 
 variable "private_key_path" {
