@@ -21,6 +21,7 @@ module "task02" {
   region            = var.region
   vpc_id            = var.vpc_id
   availability_zone = var.availability_zone
+  subnet_name       = var.subnet_name
   ami_search_param  = var.ami_search_param
   ssh_public_key    = var.ssh_public_key
   instance_type     = var.instance_type

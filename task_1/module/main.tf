@@ -15,6 +15,10 @@ data "aws_vpc" "vpc" {
 data "aws_subnet" "subnet" {
   vpc_id            = data.aws_vpc.vpc.id
   availability_zone = var.availability_zone
+  filter {
+    name   = "tag:Name"
+    values = [var.subnet_name]
+  }
 }
 
 # ---------------------------------------
@@ -41,12 +45,13 @@ resource "aws_instance" "task-01-instance" {
   })
   key_name = aws_key_pair.ssh_key.key_name
   root_block_device {
-    volume_type = "gp3"
+    volume_type = var.root_volume_param.volume_type
+    volume_size = var.root_volume_param.volume_size
   }
   subnet_id = data.aws_subnet.subnet.id
   connection {
     type        = "ssh"
-    user        = "ec2-user"
+    user        = var.ami_search_param.local_user
     host        = self.public_ip
     private_key = file(var.private_key_path)
   }

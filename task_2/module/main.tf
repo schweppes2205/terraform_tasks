@@ -13,6 +13,10 @@ data "aws_vpc" "vpc" {
 data "aws_subnet" "subnet" {
   vpc_id            = data.aws_vpc.vpc.id
   availability_zone = var.availability_zone
+  filter {
+    name   = "tag:Name"
+    values = [var.subnet_name]
+  }
 }
 
 data "aws_caller_identity" "current" {}
@@ -24,6 +28,7 @@ data "aws_caller_identity" "current" {}
 # RESOURCES
 
 resource "aws_key_pair" "ssh_key" {
+  count      = var.instance_count > 0 ? 1 : 0
   key_name   = var.ssh_public_key.name
   public_key = var.ssh_public_key.value
   tags = merge(var.tags, {
@@ -41,9 +46,10 @@ resource "aws_instance" "instance" {
     OS_type       = data.aws_ami.amzn_ami.platform_details
     Account_id    = data.aws_caller_identity.current.account_id
   })
-  key_name = aws_key_pair.ssh_key.key_name
+  key_name = aws_key_pair.ssh_key[0].key_name
   root_block_device {
-    volume_type = "gp3"
+    volume_type = var.root_volume_param.volume_type
+    volume_size = var.root_volume_param.volume_size
   }
   subnet_id = data.aws_subnet.subnet.id
   connection {

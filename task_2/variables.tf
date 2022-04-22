@@ -13,12 +13,26 @@ variable "availability_zone" {
   type        = string
 }
 
+variable "subnet_name" {
+  description = "subnet name where the EC2 instnace should be attached"
+  type        = string
+}
+
 variable "ami_search_param" {
   description = "ami image search params"
   type = object({
     most_recent = bool
     name_regex  = string
     owners      = list(string)
+    local_user  = string
+  })
+}
+
+variable "root_volume_param" {
+  description = "root volume type and size"
+  type = object({
+    volume_type = string
+    volume_size = number
   })
 }
 
