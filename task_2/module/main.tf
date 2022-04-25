@@ -54,7 +54,7 @@ resource "aws_instance" "instance" {
   subnet_id = data.aws_subnet.subnet.id
   connection {
     type        = "ssh"
-    user        = "ec2-user"
+    user        = var.ami_search_param.local_user
     host        = self.public_ip
     private_key = file(var.private_key_path)
   }
