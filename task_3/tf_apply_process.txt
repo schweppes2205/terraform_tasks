@@ -1,0 +1,207 @@
+module.sg.data.aws_caller_identity.current: Refreshing state...
+module.ec2.data.aws_caller_identity.current: Refreshing state...
+module.ec2.data.aws_vpc.vpc: Refreshing state...
+module.sg.data.aws_vpc.vpc: Refreshing state...
+module.ec2.data.aws_ami.ami: Refreshing state...
+module.ec2.data.aws_subnet.subnet: Refreshing state...
+module.sg.aws_security_group.sg[0]: Creating...
+module.sg.aws_security_group.sg[0]: Creation complete after 3s [id=sg-07e8494d68ad834de]
+module.sg.aws_security_group_rule.my_sg_ingress["80"]: Creating...
+module.sg.aws_security_group_rule.my_sg_ingress["443"]: Creating...
+module.sg.aws_security_group_rule.my_sg_ingress["22"]: Creating...
+module.sg.aws_security_group_rule.my_sg_egress["0"]: Creating...
+module.sg.aws_security_group_rule.my_sg_ingress["8080"]: Creating...
+module.ec2.aws_key_pair.ssh_key[0]: Creating...
+module.ec2.aws_key_pair.ssh_key[0]: Creation complete after 0s [id=my_custom_key_tfvars]
+module.ec2.aws_instance.instance[0]: Creating...
+module.sg.aws_security_group_rule.my_sg_ingress["80"]: Creation complete after 1s [id=sgrule-1512161534]
+module.sg.aws_security_group_rule.my_sg_ingress["443"]: Creation complete after 2s [id=sgrule-3078108752]
+module.sg.aws_security_group_rule.my_sg_ingress["22"]: Creation complete after 2s [id=sgrule-3970669899]
+module.sg.aws_security_group_rule.my_sg_egress["0"]: Creation complete after 4s [id=sgrule-1721779261]
+module.sg.aws_security_group_rule.my_sg_ingress["8080"]: Creation complete after 5s [id=sgrule-621426249]
+module.ec2.aws_instance.instance[0]: Still creating... [10s elapsed]
+module.ec2.aws_instance.instance[0]: Still creating... [20s elapsed]
+module.ec2.aws_instance.instance[0]: Still creating... [30s elapsed]
+module.ec2.aws_instance.instance[0]: Still creating... [40s elapsed]
+module.ec2.aws_instance.instance[0]: Creation complete after 45s [id=i-0b1d1d813c907b793]
+module.ec2.null_resource.data_from_instance[0]: Creating...
+module.ec2.null_resource.data_from_instance[0]: Provisioning with 'remote-exec'...
+module.ec2.null_resource.data_from_instance[0] (remote-exec): Connecting to remote host via SSH...
+module.ec2.null_resource.data_from_instance[0] (remote-exec):   Host: 18.234.195.125
+module.ec2.null_resource.data_from_instance[0] (remote-exec):   User: ec2-user
+module.ec2.null_resource.data_from_instance[0] (remote-exec):   Password: false
+module.ec2.null_resource.data_from_instance[0] (remote-exec):   Private key: true
+module.ec2.null_resource.data_from_instance[0] (remote-exec):   Certificate: false
+module.ec2.null_resource.data_from_instance[0] (remote-exec):   SSH Agent: true
+module.ec2.null_resource.data_from_instance[0] (remote-exec):   Checking Host Key: false
+module.ec2.null_resource.data_from_instance[0] (remote-exec): Connected!
+module.ec2.null_resource.data_from_instance[0]: Still creating... [10s elapsed]
+module.ec2.null_resource.data_from_instance[0]: Still creating... [20s elapsed]
+module.ec2.null_resource.data_from_instance[0]: Still creating... [30s elapsed]
+module.ec2.null_resource.data_from_instance[0]: Still creating... [40s elapsed]
+module.ec2.null_resource.data_from_instance[0]: Still creating... [50s elapsed]
+module.ec2.null_resource.data_from_instance[0]: Still creating... [1m0s elapsed]
+module.ec2.null_resource.data_from_instance[0]: Still creating... [1m10s elapsed]
+module.ec2.null_resource.data_from_instance[0]: Still creating... [1m20s elapsed]
+module.ec2.null_resource.data_from_instance[0]: Still creating... [1m30s elapsed]
+module.ec2.null_resource.data_from_instance[0] (remote-exec): ● httpd.service - The Apache HTTP Server
+module.ec2.null_resource.data_from_instance[0] (remote-exec):    Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)
+module.ec2.null_resource.data_from_instance[0] (remote-exec):    Active: inactive (dead)
+module.ec2.null_resource.data_from_instance[0] (remote-exec):      Docs: man:httpd.service(8)
+module.ec2.null_resource.data_from_instance[0] (remote-exec): SUCCESS
+module.ec2.null_resource.data_from_instance[0]: Creation complete after 1m37s [id=8192814412918222405]
+
+Apply complete! Resources: 9 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+instances_id = [
+  "i-0b1d1d813c907b793",
+]
+instances_private_ip = [
+  "172.31.17.44",
+]
+instances_public_ip = [
+  "18.234.195.125",
+]
+sg = [
+  {
+    "arn" = "arn:aws:ec2:us-east-1:523926058979:security-group/sg-07e8494d68ad834de"
+    "description" = "Managed by Terraform"
+    "egress" = []
+    "id" = "sg-07e8494d68ad834de"
+    "ingress" = []
+    "name" = "my_sg"
+    "name_prefix" = ""
+    "owner_id" = "523926058979"
+    "revoke_rules_on_delete" = false
+    "tags" = {
+      "AWS_Account_ID" = "523926058979"
+      "First_name" = "Semen"
+      "Last_name" = "Shvets"
+      "Name" = "my_sg"
+      "Tag_Source" = "tfvars_file"
+    }
+    "tags_all" = {
+      "AWS_Account_ID" = "523926058979"
+      "First_name" = "Semen"
+      "Last_name" = "Shvets"
+      "Name" = "my_sg"
+      "Tag_Source" = "tfvars_file"
+    }
+    "vpc_id" = "vpc-00dc32518740e437f"
+  },
+]
+sg_id = sg-07e8494d68ad834de
+sgr_egress = {
+  "22" = {
+    "cidr_blocks" = [
+      "0.0.0.0/0",
+    ]
+    "description" = "SSH"
+    "from_port" = 22
+    "id" = "sgrule-3970669899"
+    "protocol" = "tcp"
+    "security_group_id" = "sg-07e8494d68ad834de"
+    "self" = false
+    "to_port" = 22
+    "type" = "ingress"
+  }
+  "443" = {
+    "cidr_blocks" = [
+      "0.0.0.0/0",
+    ]
+    "description" = "HTTPS"
+    "from_port" = 443
+    "id" = "sgrule-3078108752"
+    "protocol" = "tcp"
+    "security_group_id" = "sg-07e8494d68ad834de"
+    "self" = false
+    "to_port" = 443
+    "type" = "ingress"
+  }
+  "80" = {
+    "cidr_blocks" = [
+      "0.0.0.0/0",
+    ]
+    "description" = "HTTP80"
+    "from_port" = 80
+    "id" = "sgrule-1512161534"
+    "protocol" = "tcp"
+    "security_group_id" = "sg-07e8494d68ad834de"
+    "self" = false
+    "to_port" = 80
+    "type" = "ingress"
+  }
+  "8080" = {
+    "cidr_blocks" = [
+      "0.0.0.0/0",
+    ]
+    "description" = "HTTP8080"
+    "from_port" = 8080
+    "id" = "sgrule-621426249"
+    "protocol" = "tcp"
+    "security_group_id" = "sg-07e8494d68ad834de"
+    "self" = false
+    "to_port" = 8080
+    "type" = "ingress"
+  }
+}
+sgr_ingress = {
+  "22" = {
+    "cidr_blocks" = [
+      "0.0.0.0/0",
+    ]
+    "description" = "SSH"
+    "from_port" = 22
+    "id" = "sgrule-3970669899"
+    "protocol" = "tcp"
+    "security_group_id" = "sg-07e8494d68ad834de"
+    "self" = false
+    "to_port" = 22
+    "type" = "ingress"
+  }
+  "443" = {
+    "cidr_blocks" = [
+      "0.0.0.0/0",
+    ]
+    "description" = "HTTPS"
+    "from_port" = 443
+    "id" = "sgrule-3078108752"
+    "protocol" = "tcp"
+    "security_group_id" = "sg-07e8494d68ad834de"
+    "self" = false
+    "to_port" = 443
+    "type" = "ingress"
+  }
+  "80" = {
+    "cidr_blocks" = [
+      "0.0.0.0/0",
+    ]
+    "description" = "HTTP80"
+    "from_port" = 80
+    "id" = "sgrule-1512161534"
+    "protocol" = "tcp"
+    "security_group_id" = "sg-07e8494d68ad834de"
+    "self" = false
+    "to_port" = 80
+    "type" = "ingress"
+  }
+  "8080" = {
+    "cidr_blocks" = [
+      "0.0.0.0/0",
+    ]
+    "description" = "HTTP8080"
+    "from_port" = 8080
+    "id" = "sgrule-621426249"
+    "protocol" = "tcp"
+    "security_group_id" = "sg-07e8494d68ad834de"
+    "self" = false
+    "to_port" = 8080
+    "type" = "ingress"
+  }
+}
+ssh_key_arn = arn:aws:ec2:us-east-1:523926058979:key-pair/my_custom_key_tfvars
+subnet_arn = arn:aws:ec2:us-east-1:523926058979:subnet/subnet-0c1f6240e7db2f616
+vpc_arn = arn:aws:ec2:us-east-1:523926058979:vpc/vpc-00dc32518740e437f
+[13:29:16] [cost 178.040s] tfa -auto-approve                                     
