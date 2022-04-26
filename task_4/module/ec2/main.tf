@@ -1,5 +1,6 @@
-# DATASOURCES
-
+#############
+#DATASOURCES#
+#############
 data "aws_ami" "ami" {
   most_recent = var.ami_param.most_recent
   name_regex  = var.ami_param.name_regex
@@ -21,19 +22,13 @@ data "aws_subnet" "subnet" {
 
 data "aws_caller_identity" "current" {}
 
-# ---------------------------------------
-# VARIABLES
+###########
+#VARIABLES#
+###########
 
-# ---------------------------------------
-# RESOURCES
-
-resource "aws_key_pair" "ssh_key" {
-  key_name   = var.ssh_public_key.name
-  public_key = var.ssh_public_key.value
-  tags = merge(var.tags, {
-    AWS_Account_ID = data.aws_caller_identity.current.account_id
-  })
-}
+###########
+#RESOURCES#
+###########
 
 resource "aws_instance" "instance" {
   instance_type = var.instance_type
@@ -50,7 +45,7 @@ resource "aws_instance" "instance" {
   }
   vpc_security_group_ids = var.sg_id_list
   user_data              = file("${path.module}/userdata.sh")
-  key_name               = aws_key_pair.ssh_key.key_name
+  key_name               = var.key_pair_name
 }
 
 resource "null_resource" "data_from_instance" {
