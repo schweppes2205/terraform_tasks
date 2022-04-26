@@ -31,10 +31,11 @@ data "aws_caller_identity" "current" {}
 ###########
 
 resource "aws_instance" "instance" {
+  count         = var.instance_count
   instance_type = var.instance_type
   ami           = data.aws_ami.ami.id
   tags = merge(var.tags, {
-    Name          = var.name
+    Name          = "${var.name}_${count.index}"
     Date_creation = timestamp(),
     OS_type       = data.aws_ami.ami.platform_details
     Account_id    = data.aws_caller_identity.current.account_id
@@ -49,10 +50,11 @@ resource "aws_instance" "instance" {
 }
 
 resource "null_resource" "data_from_instance" {
+  count = var.instance_count
   connection {
     type        = "ssh"
     user        = var.ami_param.local_user
-    host        = aws_instance.instance.public_ip
+    host        = aws_instance.instance[count.index].public_ip
     private_key = file(var.private_key_path)
   }
   provisioner "remote-exec" {

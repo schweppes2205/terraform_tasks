@@ -1,22 +1,22 @@
 variable "instances_param_lst" {
   description = "ec2 instances params"
   type = list(object({
-    key               = number
-    availability_zone = string
-    subnet_name       = string
-    name              = string
+    key = number
     ami_param = object({
       most_recent = bool
       name_regex  = string
       owners      = list(string)
       local_user  = string
     })
+    availability_zone = string
+    subnet_name       = string
+    instance_count    = number
+    instance_type     = string
+    name              = string
     root_volume_param = object({
       volume_size = number
       volume_type = string
     })
-    instance_type    = string
-    ssh_public_key   = map(string)
     private_key_path = string
   }))
 }

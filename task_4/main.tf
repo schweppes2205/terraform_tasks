@@ -41,17 +41,18 @@ resource "aws_key_pair" "ssh_key" {
 module "ec2" {
   source            = "./module/ec2"
   for_each          = { for item in var.instances_param_lst : item.key => item }
+  ami_param         = each.value.ami_param
   vpc_id            = var.vpc_id
-  sg_id_list        = [module.sg.sg_id]
-  tags              = var.tags
-  key_pair_name     = aws_key_pair.ssh_key.key_name
   availability_zone = each.value.availability_zone
   subnet_name       = each.value.subnet_name
-  ami_param         = each.value.ami_param
-  root_volume_param = each.value.root_volume_param
+  instance_count    = each.value.instance_count
   instance_type     = each.value.instance_type
+  tags              = var.tags
+  name              = each.value.name
+  root_volume_param = each.value.root_volume_param
+  sg_id_list        = [module.sg.sg_id]
+  key_pair_name     = aws_key_pair.ssh_key.key_name
   private_key_path  = each.value.private_key_path
-  # instance_count    = each.value.instance_count
 }
 
 module "sg" {
