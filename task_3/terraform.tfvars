@@ -6,32 +6,32 @@ security_group_name = "my_sg"
 
 sgr_ingress = [
   {
-    from_port   = "22"
-    to_port     = "22"
-    protocol    = "tcp"
-    cidr_blocks = "0.0.0.0/0"
+    from_port = "22"
+    to_port   = "22"
+    protocol  = "tcp"
+    # cidr_blocks = "62.4.33.63/32"
     description = "SSH"
   },
   {
-    from_port   = "80"
-    to_port     = "80"
-    protocol    = "tcp"
-    cidr_blocks = "0.0.0.0/0"
+    from_port = "80"
+    to_port   = "80"
+    protocol  = "tcp"
+    # cidr_blocks = "0.0.0.0/0"
     description = "HTTP80"
   },
 
   {
-    from_port   = "8080"
-    to_port     = "8080"
-    protocol    = "tcp"
-    cidr_blocks = "0.0.0.0/0"
+    from_port = "8080"
+    to_port   = "8080"
+    protocol  = "tcp"
+    # cidr_blocks = "0.0.0.0/0"
     description = "HTTP8080"
   },
   {
-    from_port   = "443"
-    to_port     = "443"
-    protocol    = "tcp"
-    cidr_blocks = "0.0.0.0/0"
+    from_port = "443"
+    to_port   = "443"
+    protocol  = "tcp"
+    # cidr_blocks = "0.0.0.0/0"
     description = "HTTPS"
   },
 ]
@@ -76,4 +76,4 @@ ssh_public_key = {
 
 private_key_path = "~/.ssh/id_rsa"
 
-instance_count = 2
+instance_count = 1

@@ -14,6 +14,6 @@ output "ssh_key_arn" {
   value = length(aws_key_pair.ssh_key) > 0 ? aws_key_pair.ssh_key[0].arn : "0"
 }
 
-output "subnet_arn" {
-  value = data.aws_subnet.subnet.arn
-}
+# output "subnet_arn" {
+#   value = data.aws_subnet.subnet.arn
+# }

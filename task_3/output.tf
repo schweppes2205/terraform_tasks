@@ -31,5 +31,5 @@ output "ssh_key_arn" {
 }
 
 output "subnet_arn" {
-  value = module.ec2.subnet_arn
+  value = data.aws_subnet.subnet.arn
 }

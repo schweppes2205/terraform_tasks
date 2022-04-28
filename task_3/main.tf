@@ -16,6 +16,23 @@ provider "aws" {
   region = var.region
 }
 
+##############
+#DATA SOURCES#
+##############
+
+data "aws_subnet" "subnet" {
+  vpc_id            = var.vpc_id
+  availability_zone = var.availability_zone
+  filter {
+    name   = "tag:Name"
+    values = [var.subnet_name]
+  }
+}
+
+#########
+#MODULES#
+#########
+
 module "sg" {
   source              = "./module/sg"
   create_sg           = var.instance_count > 0 ? true : false
@@ -27,11 +44,12 @@ module "sg" {
 }
 
 module "ec2" {
-  source            = "./module/ec2"
-  region            = var.region
-  vpc_id            = var.vpc_id
-  availability_zone = var.availability_zone
-  subnet_name       = var.subnet_name
+  source = "./module/ec2"
+  region = var.region
+  # vpc_id            = var.vpc_id
+  # availability_zone = var.availability_zone
+  # subnet_name       = var.subnet_name
+  subnet_id         = data.aws_subnet.subnet.id
   ami_param         = var.ami_param
   root_volume_param = var.root_volume_param
   sg_id_list        = [module.sg.sg_id]
