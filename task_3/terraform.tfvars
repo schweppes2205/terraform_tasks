@@ -76,4 +76,4 @@ ssh_public_key = {
 
 private_key_path = "~/.ssh/id_rsa"
 
-instance_count = 0
+instance_count = 2

@@ -30,10 +30,6 @@ output "ssh_key_arn" {
   value = module.ec2.ssh_key_arn
 }
 
-output "vpc_arn" {
-  value = module.ec2.vpc_arn
-}
-
 output "subnet_arn" {
   value = module.ec2.subnet_arn
 }

@@ -6,12 +6,8 @@ data "aws_ami" "ami" {
   owners      = var.ami_param.owners
 }
 
-data "aws_vpc" "vpc" {
-  id = var.vpc_id
-}
-
 data "aws_subnet" "subnet" {
-  vpc_id            = data.aws_vpc.vpc.id
+  vpc_id            = var.vpc_id
   availability_zone = var.availability_zone
   filter {
     name   = "tag:Name"
@@ -37,6 +33,7 @@ resource "aws_key_pair" "ssh_key" {
 }
 
 resource "aws_instance" "instance" {
+  subnet_id     = data.aws_subnet.subnet.id
   count         = var.instance_count
   instance_type = var.instance_type
   ami           = data.aws_ami.ami.id
