@@ -10,25 +10,6 @@ variable "region" {
   default     = "us-east-1"
 }
 
-# variable "vpc_id" {
-#   description = "vpc to place an EC2 instance"
-#   type        = string
-#   default     = "vpc-00dc32518740e437f"
-# }
-
-# variable "availability_zone" {
-#   description = "AZ to place an EC2 instance"
-#   type        = string
-#   default     = "us-east-1b"
-# }
-
-# variable "subnet_name" {
-#   description = "subnet name where the EC2 instnace should be attached"
-#   type        = string
-#   default     = "my_subnet-use1-az1"
-# }
-
-
 variable "ami_param" {
   description = "ami image parameters"
   type = object({

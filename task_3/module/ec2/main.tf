@@ -6,15 +6,6 @@ data "aws_ami" "ami" {
   owners      = var.ami_param.owners
 }
 
-# data "aws_subnet" "subnet" {
-#   vpc_id            = var.vpc_id
-#   availability_zone = var.availability_zone
-#   filter {
-#     name   = "tag:Name"
-#     values = [var.subnet_name]
-#   }
-# }
-
 data "aws_caller_identity" "current" {}
 
 # ---------------------------------------
@@ -33,7 +24,6 @@ resource "aws_key_pair" "ssh_key" {
 }
 
 resource "aws_instance" "instance" {
-  # subnet_id     = data.aws_subnet.subnet.id
   subnet_id     = var.subnet_id
   count         = var.instance_count
   instance_type = var.instance_type

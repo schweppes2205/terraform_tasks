@@ -44,11 +44,8 @@ module "sg" {
 }
 
 module "ec2" {
-  source = "./module/ec2"
-  region = var.region
-  # vpc_id            = var.vpc_id
-  # availability_zone = var.availability_zone
-  # subnet_name       = var.subnet_name
+  source            = "./module/ec2"
+  region            = var.region
   subnet_id         = data.aws_subnet.subnet.id
   ami_param         = var.ami_param
   root_volume_param = var.root_volume_param
