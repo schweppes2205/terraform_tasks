@@ -7,18 +7,18 @@ data "aws_ami" "ami" {
   owners      = var.ami_param.owners
 }
 
-data "aws_vpc" "vpc" {
-  id = var.vpc_id
-}
+# data "aws_vpc" "vpc" {
+#   id = var.vpc_id
+# }
 
-data "aws_subnet" "subnet" {
-  vpc_id            = data.aws_vpc.vpc.id
-  availability_zone = var.availability_zone
-  filter {
-    name   = "tag:Name"
-    values = [var.subnet_name]
-  }
-}
+# data "aws_subnet" "subnet" {
+#   vpc_id            = data.aws_vpc.vpc.id
+#   availability_zone = var.availability_zone
+#   filter {
+#     name   = "tag:Name"
+#     values = [var.subnet_name]
+#   }
+# }
 
 data "aws_caller_identity" "current" {}
 
@@ -31,6 +31,7 @@ data "aws_caller_identity" "current" {}
 ###########
 
 resource "aws_instance" "instance" {
+  subnet_id     = var.subnet_id
   count         = var.instance_count
   instance_type = var.instance_type
   ami           = data.aws_ami.ami.id
@@ -49,18 +50,18 @@ resource "aws_instance" "instance" {
   key_name               = var.key_pair_name
 }
 
-resource "null_resource" "data_from_instance" {
-  count = var.instance_count
-  connection {
-    type        = "ssh"
-    user        = var.ami_param.local_user
-    host        = aws_instance.instance[count.index].public_ip
-    private_key = file(var.private_key_path)
-  }
-  provisioner "remote-exec" {
-    inline = [
-      "while [ ! -f /tmp/testfile ]; do sleep 2; done",
-      "cat /tmp/testfile",
-    ]
-  }
-}
+# resource "null_resource" "data_from_instance" {
+#   count = var.instance_count
+#   connection {
+#     type        = "ssh"
+#     user        = var.ami_param.local_user
+#     host        = aws_instance.instance[count.index].public_ip
+#     private_key = file(var.private_key_path)
+#   }
+#   provisioner "remote-exec" {
+#     inline = [
+#       "while [ ! -f /tmp/testfile ]; do sleep 2; done",
+#       "cat /tmp/testfile",
+#     ]
+#   }
+# }

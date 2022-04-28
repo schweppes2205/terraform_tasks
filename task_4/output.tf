@@ -14,7 +14,6 @@ output "sgr_egress" {
   value = module.sg.sgr_egress
 }
 
-output "instances_id" {
-  value = module.ec2
+output "ec2_module_instance_arn-pub_ip" {
+  value = [for k, v in module.ec2 : v.instances_arn_public_ip]
 }
-

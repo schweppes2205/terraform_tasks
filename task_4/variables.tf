@@ -1,24 +1,38 @@
+variable "ami_local_user" {
+  description = "ami local user"
+  type        = string
+  default     = "ec2-user"
+}
+
 variable "instances_param_lst" {
   description = "ec2 instances params"
   type = list(object({
-    key = number
     ami_param = object({
       most_recent = bool
       name_regex  = string
       owners      = list(string)
-      local_user  = string
     })
-    availability_zone = string
-    subnet_name       = string
-    instance_count    = number
-    instance_type     = string
-    name              = string
+    instance_count = number
+    instance_type  = string
+    name           = string
     root_volume_param = object({
       volume_size = number
       volume_type = string
     })
     private_key_path = string
   }))
+}
+
+variable "availability_zone" {
+  description = "AZ to place an EC2 instance"
+  type        = string
+  default     = "us-east-1b"
+}
+
+variable "subnet_name" {
+  description = "subnet name where the EC2 instnace should be attached"
+  type        = string
+  default     = "my_subnet-use1-az1"
 }
 
 variable "region" {

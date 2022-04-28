@@ -8,37 +8,23 @@ variable "ami_param" {
     most_recent = bool
     name_regex  = string
     owners      = list(string)
-    local_user  = string
   })
   default = {
     most_recent = true
     name_regex  = "amzn2-ami-kernel"
     owners      = ["amazon"]
-    local_user  = "ec2-user"
   }
-}
-
-variable "vpc_id" {
-  description = "vpc to place an EC2 instance"
-  type        = string
-  default     = "vpc-00dc32518740e437f"
-}
-
-variable "availability_zone" {
-  description = "AZ to place an EC2 instance"
-  type        = string
-  default     = "us-east-1b"
-}
-
-variable "subnet_name" {
-  description = "subnet name where the EC2 instnace should be attached"
-  type        = string
-  default     = "my_subnet-use1-az1"
 }
 
 ###############
 #for resources#
 ###############
+
+variable "subnet_id" {
+  description = "subnet id"
+  type        = string
+  default     = ""
+}
 
 variable "instance_count" {
   description = "instance count"

@@ -1,19 +1,17 @@
 region = "us-east-1"
 
+ami_local_user = "ec2-user"
+
 instances_param_lst = [
   {
-    key = 1
     ami_param = {
       most_recent = true
       name_regex  = "amzn2-ami-kernel"
       owners      = ["amazon"]
-      local_user  = "ec2-user"
     }
-    availability_zone = "us-east-1b"
-    subnet_name       = "my_subnet-use1-az1"
-    instance_count    = 3
-    instance_type     = "t2.micro"
-    name              = "task04_01"
+    instance_count = 3
+    instance_type  = "t2.micro"
+    name           = "task04_01"
     root_volume_param = {
       volume_size = 8
       volume_type = "gp3"
@@ -21,18 +19,14 @@ instances_param_lst = [
     private_key_path = "~/.ssh/id_rsa"
   },
   {
-    key = 2
     ami_param = {
       most_recent = true
       name_regex  = "amzn2-ami-kernel"
       owners      = ["amazon"]
-      local_user  = "ec2-user"
     }
-    availability_zone = "us-east-1b"
-    subnet_name       = "my_subnet-use1-az1"
-    instance_count    = 1
-    instance_type     = "t2.micro"
-    name              = "task04_02"
+    instance_count = 1
+    instance_type  = "t2.micro"
+    name           = "task04_02"
     root_volume_param = {
       volume_size = 8
       volume_type = "gp3"
@@ -43,6 +37,10 @@ instances_param_lst = [
 
 vpc_id = "vpc-00dc32518740e437f"
 
+availability_zone = "us-east-1b"
+
+subnet_name = "my_subnet-use1-az1"
+
 security_group_name = "my_sg"
 
 sgr_ingress = [
@@ -50,14 +48,12 @@ sgr_ingress = [
     from_port   = "22"
     to_port     = "22"
     protocol    = "tcp"
-    cidr_blocks = "0.0.0.0/0"
     description = "SSH"
   },
   {
     from_port   = "80"
     to_port     = "80"
     protocol    = "tcp"
-    cidr_blocks = "0.0.0.0/0"
     description = "HTTP80"
   },
 
@@ -65,14 +61,12 @@ sgr_ingress = [
     from_port   = "8080"
     to_port     = "8080"
     protocol    = "tcp"
-    cidr_blocks = "0.0.0.0/0"
     description = "HTTP8080"
   },
   {
     from_port   = "443"
     to_port     = "443"
     protocol    = "tcp"
-    cidr_blocks = "0.0.0.0/0"
     description = "HTTPS"
   },
 ]

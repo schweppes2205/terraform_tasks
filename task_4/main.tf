@@ -22,6 +22,24 @@ provider "aws" {
 
 data "aws_caller_identity" "current" {}
 
+data "aws_subnet" "subnet" {
+  vpc_id            = var.vpc_id
+  availability_zone = var.availability_zone
+  filter {
+    name   = "tag:Name"
+    values = [var.subnet_name]
+  }
+}
+
+########
+#LOCALS#
+########
+
+locals {
+  ec2_pub_ip = flatten([for k, v in module.ec2 : v.instances_public_ip])
+}
+
+
 ###########
 #RESOURCES#
 ###########
@@ -34,17 +52,40 @@ resource "aws_key_pair" "ssh_key" {
   })
 }
 
+resource "null_resource" "data_from_instance" {
+  count = length(local.ec2_pub_ip)
+  connection {
+    type        = "ssh"
+    user        = var.ami_local_user
+    host        = local.ec2_pub_ip[count.index]
+    private_key = file(var.private_key_path)
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "while [ ! -f /tmp/testfile ]; do sleep 2; done",
+      "cat /tmp/testfile",
+    ]
+  }
+}
+
 #########
 #MODULES#
 #########
 
 module "ec2" {
-  source            = "./module/ec2"
-  for_each          = { for item in var.instances_param_lst : item.key => item }
+  source = "./module/ec2"
+  for_each = { for item in var.instances_param_lst : md5(join("-", [
+    tostring(item.ami_param.most_recent),
+    item.ami_param.name_regex,
+    tostring(item.instance_count),
+    item.instance_type,
+    item.name,
+    tostring(item.root_volume_param.volume_size),
+    item.root_volume_param.volume_type,
+    item.private_key_path,
+  ])) => item }
   ami_param         = each.value.ami_param
-  vpc_id            = var.vpc_id
-  availability_zone = each.value.availability_zone
-  subnet_name       = each.value.subnet_name
+  subnet_id         = data.aws_subnet.subnet.id
   instance_count    = each.value.instance_count
   instance_type     = each.value.instance_type
   tags              = var.tags
