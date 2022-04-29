@@ -36,19 +36,3 @@ resource "aws_instance" "instance" {
   user_data              = file("${path.module}/userdata.sh")
   key_name               = var.key_pair_name
 }
-
-# resource "null_resource" "data_from_instance" {
-#   count = var.instance_count
-#   connection {
-#     type        = "ssh"
-#     user        = var.ami_param.local_user
-#     host        = aws_instance.instance[count.index].public_ip
-#     private_key = file(var.private_key_path)
-#   }
-#   provisioner "remote-exec" {
-#     inline = [
-#       "while [ ! -f /tmp/testfile ]; do sleep 2; done",
-#       "cat /tmp/testfile",
-#     ]
-#   }
-# }
