@@ -29,12 +29,15 @@ resource "aws_security_group" "sg" {
 
 resource "aws_security_group_rule" "my_sg_ingress" {
   type = "ingress"
-  for_each = { for item in local.sgr_ingress : md5(join("-", [
-    item.from_port,
-    item.to_port,
-    item.protocol,
-    item.description,
-  ])) => item }
+  for_each = { for item in local.sgr_ingress : join("-", [
+    "aws_security_group_rule_ingress",
+    md5(join("-", [
+      item.from_port,
+      item.to_port,
+      item.protocol,
+      item.description,
+    ])),
+  ]) => item }
   from_port         = each.value.from_port
   to_port           = each.value.to_port
   protocol          = each.value.protocol
@@ -45,12 +48,15 @@ resource "aws_security_group_rule" "my_sg_ingress" {
 
 resource "aws_security_group_rule" "my_sg_egress" {
   type = "egress"
-  for_each = { for item in local.sgr_egress : md5(join("-", [
-    item.from_port,
-    item.to_port,
-    item.protocol,
-    item.cidr_blocks,
-  ])) => item }
+  for_each = { for item in local.sgr_egress : join("-", [
+    "aws_security_group_rule_egress",
+    md5(join("-", [
+      item.from_port,
+      item.to_port,
+      item.protocol,
+      item.cidr_blocks,
+    ]))
+  ]) => item }
   from_port         = each.value.from_port
   to_port           = each.value.to_port
   protocol          = each.value.protocol

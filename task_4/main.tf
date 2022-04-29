@@ -74,16 +74,19 @@ resource "null_resource" "data_from_instance" {
 
 module "ec2" {
   source = "./module/ec2"
-  for_each = { for item in var.instances_param_lst : md5(join("-", [
-    tostring(item.ami_param.most_recent),
-    item.ami_param.name_regex,
-    tostring(item.instance_count),
-    item.instance_type,
-    item.name,
-    tostring(item.root_volume_param.volume_size),
-    item.root_volume_param.volume_type,
-    item.private_key_path,
-  ])) => item }
+  for_each = { for item in var.instances_param_lst : join("-", [
+    "module-ec2-${item.name}",
+    md5(join("-", [
+      tostring(item.ami_param.most_recent),
+      item.ami_param.name_regex,
+      tostring(item.instance_count),
+      item.instance_type,
+      item.name,
+      tostring(item.root_volume_param.volume_size),
+      item.root_volume_param.volume_type,
+      item.private_key_path,
+    ])),
+  ]) => item }
   ami_param         = each.value.ami_param
   subnet_id         = data.aws_subnet.subnet.id
   instance_count    = each.value.instance_count
