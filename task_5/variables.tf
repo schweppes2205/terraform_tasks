@@ -18,6 +18,61 @@ variable "tags" {
   type        = map
 }
 
+variable "td_family" {
+  description = "ecs task definition family"
+  type        = string
+}
+
+variable "td_name" {
+  description = "task definition name"
+  type        = string
+}
+
+variable "td_image" {
+  description = "task definition image"
+  type        = string
+}
+
+variable "td_cpu" {
+  description = "task definition cpu"
+  type        = number
+}
+
+variable "td_memory" {
+  description = "task definition memory"
+  type        = number
+}
+
+variable "td_pm_hostPort" {
+  description = "host port"
+  type        = number
+}
+
+variable "td_pm_containerPort" {
+  description = "container port"
+  type        = number
+}
+
+variable "td_pm_protocol" {
+  description = "protocol"
+  type        = string
+}
+
+variable "ecs_svc_name" {
+  description = "ecs serivce name"
+  type        = string
+}
+
+variable "ecs_svc_launchtype" {
+  description = "ecs cluster service launch type"
+  type        = string
+}
+
+variable "ecs_svc_count" {
+  description = "ecs cluster service instances desired count"
+  type        = number
+}
+
 variable "ami_param" {
   description = "ami image parameters"
   type = object({

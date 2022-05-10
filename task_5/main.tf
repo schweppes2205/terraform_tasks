@@ -56,16 +56,26 @@ module "securityGroup" {
 }
 
 module "elasticContainerSerice" {
-  source           = "./module/ecs"
-  ecs_cluster_name = var.ecs_cluster_name
-  tags             = var.tags
+  source              = "./module/ecs"
+  ecs_cluster_name    = var.ecs_cluster_name
+  tags                = var.tags
+  td_family           = var.td_family
+  td_name             = var.td_name
+  td_image            = var.td_image
+  td_cpu              = var.td_cpu
+  td_memory           = var.td_memory
+  td_pm_hostPort      = var.td_pm_hostPort
+  td_pm_containerPort = var.td_pm_containerPort
+  td_pm_protocol      = var.td_pm_protocol
+  ecs_svc_name        = var.ecs_svc_name
+  ecs_svc_launchtype  = var.ecs_svc_launchtype
+  ecs_svc_count       = var.ecs_svc_count
 }
 
 module "autoScalingGroup" {
-  source             = "./module/asg"
-  ami_param          = var.ami_param
-  launch_config_name = var.launch_config_name
-  # image_id            = var.image_id
+  source              = "./module/asg"
+  ami_param           = var.ami_param
+  launch_config_name  = var.launch_config_name
   instance_type       = var.instance_type
   key_name            = aws_key_pair.ssh_key.key_name
   asg_param           = var.asg_param

@@ -13,6 +13,28 @@ tags = {
   Tag_Source = "tfvars_file"
 }
 
+td_family = "my_task_tfvars"
+
+td_name = "centos"
+
+td_image = "centos"
+
+td_cpu = 0
+
+td_memory = 400
+
+td_pm_hostPort = 2222
+
+td_pm_containerPort = 22
+
+td_pm_protocol = "tcp"
+
+ecs_svc_name = "my_svc_tfvars"
+
+ecs_svc_launchtype = "EC2"
+
+ecs_svc_count = 2
+
 ami_param = {
   most_recent  = true
   name_regex   = "amzn2-ami-ecs-hvm-2.0.2022"
