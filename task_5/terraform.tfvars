@@ -14,27 +14,64 @@ tags = {
 }
 
 ami_param = {
-  most_recent = true
-  name_regex  = "amzn2-ami-kernel"
-  owners      = ["amazon"]
+  most_recent  = true
+  name_regex   = "amzn2-ami-ecs-hvm-2.0.2022"
+  owners       = ["amazon"]
+  architecture = ["x86_64"]
 }
 
 launch_config_name = "my_custom_launch_config"
 
-image_id = "ami-0022f774911c1d690"
-
 instance_type = "t2.micro"
 
 root_volume_param = {
-  volume_size = 8
+  volume_size = 30
   volume_type = "gp3"
 }
+
+ecs_cluster_name = "my_ecs_cluster_tfvars"
 
 asg_param = {
   desired_capacity = 2
   max_size         = 4
   min_size         = 2
-  name             = "my_custom_asg_"
+  name             = "my_custom_asg_tfvars"
 }
 
 instace_name = "inst_name_tfvars"
+
+create_sg = true
+
+security_group_name = "my_sg"
+
+vpc_id = "vpc-00dc32518740e437f"
+
+sgr_ingress = [
+  {
+    from_port   = "22"
+    to_port     = "22"
+    protocol    = "tcp"
+    description = "SSH"
+  },
+  {
+    from_port   = "443"
+    to_port     = "443"
+    protocol    = "tcp"
+    description = "HTTPS"
+  },
+  {
+    from_port   = "80"
+    to_port     = "80"
+    protocol    = "tcp"
+    description = "HTTP80"
+  },
+]
+
+sgr_egress = [
+  {
+    from_port   = "0"
+    to_port     = "0"
+    protocol    = "-1"
+    cidr_blocks = "0.0.0.0/0"
+  },
+]

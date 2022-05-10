@@ -6,9 +6,23 @@ data "aws_ami" "ami" {
   most_recent = var.ami_param.most_recent
   name_regex  = var.ami_param.name_regex
   owners      = var.ami_param.owners
+  filter {
+    name   = "architecture"
+    values = var.ami_param.architecture
+  }
 }
 
-# data "aws_caller_identity" "current" {}
+data "aws_iam_policy_document" "ecs_agent" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+  }
+}
+
 
 ###########
 #VARIABLES#
@@ -16,8 +30,8 @@ data "aws_ami" "ami" {
 
 locals {
   tags_asg = merge(var.tags, {
-    Date_creation = timestamp(),
-    OS_type       = data.aws_ami.ami.platform_details
+    # Date_creation = timestamp(),
+    OS_type = data.aws_ami.ami.platform_details
   })
 }
 
@@ -25,16 +39,36 @@ locals {
 #RESOURCES#
 ###########
 
+# instance role creation for ecs ec2 agents
+resource "aws_iam_role" "ecs_agent" {
+  name               = "ecs-agent"
+  assume_role_policy = data.aws_iam_policy_document.ecs_agent.json
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_agent" {
+  role       = aws_iam_role.ecs_agent.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
+}
+
+resource "aws_iam_instance_profile" "ecs_agent" {
+  name = "ecs-agent"
+  role = aws_iam_role.ecs_agent.name
+}
+
 resource "aws_launch_configuration" "launch_config" {
-  name          = var.launch_config_name
-  image_id      = var.image_id
-  instance_type = var.instance_type
-  key_name      = var.key_name
-  # user_data = 
+  name                 = var.launch_config_name
+  image_id             = data.aws_ami.ami.image_id
+  iam_instance_profile = aws_iam_instance_profile.ecs_agent.name
+  instance_type        = var.instance_type
+  key_name             = var.key_name
   root_block_device {
     volume_type = var.root_volume_param.volume_type
     volume_size = var.root_volume_param.volume_size
   }
+  user_data = templatefile("${path.module}/userdata.sh.tpl", {
+    ecs_cluster_name = var.ecs_cluster_name
+  })
+  security_groups = [var.sg_id]
 }
 
 resource "aws_autoscaling_group" "asg" {
