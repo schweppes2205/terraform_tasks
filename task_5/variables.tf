@@ -43,19 +43,38 @@ variable "td_memory" {
   type        = number
 }
 
-variable "td_pm_hostPort" {
-  description = "host port"
-  type        = number
+variable "td_entp" {
+  description = "task definition container entry point"
+  type        = list(string)
 }
 
-variable "td_pm_containerPort" {
-  description = "container port"
-  type        = number
+variable "td_cmd" {
+  description = "task definition container command"
+  type        = list(string)
 }
 
-variable "td_pm_protocol" {
-  description = "protocol"
-  type        = string
+# variable "td_pm_hostPort" {
+#   description = "host port"
+#   type        = number
+# }
+
+# variable "td_pm_containerPort" {
+#   description = "container port"
+#   type        = number
+# }
+
+# variable "td_pm_protocol" {
+#   description = "protocol"
+#   type        = string
+# }
+
+variable "td_pm" {
+  description = "task description port mapping"
+  type = list(object({
+    containerPort = number,
+    hostPort      = number,
+    protocol      = string
+  }))
 }
 
 variable "ecs_svc_name" {

@@ -56,20 +56,20 @@ module "securityGroup" {
 }
 
 module "elasticContainerSerice" {
-  source              = "./module/ecs"
-  ecs_cluster_name    = var.ecs_cluster_name
-  tags                = var.tags
-  td_family           = var.td_family
-  td_name             = var.td_name
-  td_image            = var.td_image
-  td_cpu              = var.td_cpu
-  td_memory           = var.td_memory
-  td_pm_hostPort      = var.td_pm_hostPort
-  td_pm_containerPort = var.td_pm_containerPort
-  td_pm_protocol      = var.td_pm_protocol
-  ecs_svc_name        = var.ecs_svc_name
-  ecs_svc_launchtype  = var.ecs_svc_launchtype
-  ecs_svc_count       = var.ecs_svc_count
+  source             = "./module/ecs"
+  ecs_cluster_name   = var.ecs_cluster_name
+  tags               = var.tags
+  td_family          = var.td_family
+  td_name            = var.td_name
+  td_image           = var.td_image
+  td_cpu             = var.td_cpu
+  td_memory          = var.td_memory
+  td_cmd             = var.td_cmd
+  td_entp            = var.td_entp
+  td_pm              = var.td_pm
+  ecs_svc_name       = var.ecs_svc_name
+  ecs_svc_launchtype = var.ecs_svc_launchtype
+  ecs_svc_count      = var.ecs_svc_count
 }
 
 module "autoScalingGroup" {

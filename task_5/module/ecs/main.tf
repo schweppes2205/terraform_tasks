@@ -5,13 +5,13 @@
 data "template_file" "container_definition" {
   template = file("${path.module}/task_definition.json.tpl")
   vars = {
-    td_name             = var.td_name,
-    td_image            = var.td_image,
-    td_cpu              = var.td_cpu,
-    td_memory           = var.td_memory,
-    td_pm_hostPort      = var.td_pm_hostPort,
-    td_pm_containerPort = var.td_pm_containerPort,
-    td_pm_protocol      = var.td_pm_protocol
+    td_name   = var.td_name,
+    td_image  = var.td_image,
+    td_cpu    = var.td_cpu,
+    td_memory = var.td_memory,
+    td_entp   = jsonencode(var.td_entp)
+    td_cmd    = jsonencode(var.td_cmd)
+    td_pm     = jsonencode(var.td_pm)
   }
 }
 

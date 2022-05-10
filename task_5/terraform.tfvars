@@ -23,11 +23,15 @@ td_cpu = 0
 
 td_memory = 400
 
-td_pm_hostPort = 2222
+td_entp = ["sh", "-c"]
 
-td_pm_containerPort = 22
+td_cmd = ["ping 8.8.8.8"]
 
-td_pm_protocol = "tcp"
+td_pm = [{
+  containerPort = 22,
+  hostPort      = 2222,
+  protocol      = "tcp"
+}]
 
 ecs_svc_name = "my_svc_tfvars"
 

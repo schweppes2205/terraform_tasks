@@ -43,22 +43,30 @@ variable "td_memory" {
   default     = 300
 }
 
-variable "td_pm_hostPort" {
-  description = "host port"
-  type        = number
-  default     = 80
+variable "td_entp" {
+  description = "task definition container entry point"
+  type        = list(string)
+  default     = ["sh", "-c"]
 }
 
-variable "td_pm_containerPort" {
-  description = "container port"
-  type        = number
-  default     = 80
+variable "td_cmd" {
+  description = "task definition container command"
+  type        = list(string)
+  default     = ["ping 8.8.8.8"]
 }
 
-variable "td_pm_protocol" {
-  description = "protocol"
-  type        = string
-  default     = "tcp"
+variable "td_pm" {
+  description = "task description port mapping"
+  type = list(object({
+    containerPort = number,
+    hostPort      = number,
+    protocol      = string
+  }))
+  default = [{
+    containerPort = 80,
+    hostPort      = 80,
+    protocol      = "tcp"
+  }]
 }
 
 variable "ecs_svc_name" {
