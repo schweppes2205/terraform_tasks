@@ -74,20 +74,20 @@ vpc_id = "vpc-00dc32518740e437f"
 
 sgr_ingress = [
   {
-    from_port   = "22"
-    to_port     = "22"
+    from_port   = 22
+    to_port     = 22
     protocol    = "tcp"
     description = "SSH"
   },
   {
-    from_port   = "443"
-    to_port     = "443"
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     description = "HTTPS"
   },
   {
-    from_port   = "80"
-    to_port     = "80"
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
     description = "HTTP80"
   },
@@ -95,8 +95,8 @@ sgr_ingress = [
 
 sgr_egress = [
   {
-    from_port   = "0"
-    to_port     = "0"
+    from_port   = 0
+    to_port     = 0
     protocol    = "-1"
     cidr_blocks = "0.0.0.0/0"
   },

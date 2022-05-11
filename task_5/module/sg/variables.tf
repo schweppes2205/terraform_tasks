@@ -27,45 +27,39 @@ variable "tags" {
 
 variable "sgr_ingress" {
   description = "security group rules - ingress"
-  type        = list(map(string))
-  default = [
-    {
-      from_port   = "22"
-      to_port     = "22"
-      protocol    = "tcp"
-      description = "SSH"
+  type = list(object({
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    description = string
+  }))
+  default = [{
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    description = "SSH"
     },
     {
-      from_port   = "80"
-      to_port     = "80"
+      from_port   = 80
+      to_port     = 80
       protocol    = "tcp"
       description = "HTTP80"
-    },
-
-    {
-      from_port   = "8080"
-      to_port     = "8080"
-      protocol    = "tcp"
-      description = "HTTP8080"
-    },
-    {
-      from_port   = "443"
-      to_port     = "443"
-      protocol    = "tcp"
-      description = "HTTPS"
     },
   ]
 }
 
 variable "sgr_egress" {
   description = "security group rules - egress"
-  type        = list(map(string))
-  default = [
-    {
-      from_port   = "0"
-      to_port     = "0"
-      protocol    = "-1"
-      cidr_blocks = "0.0.0.0/0"
-    },
-  ]
+  type = list(object({
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_blocks = string
+  }))
+  default = [{
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = "0.0.0.0/0"
+  }]
 }

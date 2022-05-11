@@ -53,21 +53,6 @@ variable "td_cmd" {
   type        = list(string)
 }
 
-# variable "td_pm_hostPort" {
-#   description = "host port"
-#   type        = number
-# }
-
-# variable "td_pm_containerPort" {
-#   description = "container port"
-#   type        = number
-# }
-
-# variable "td_pm_protocol" {
-#   description = "protocol"
-#   type        = string
-# }
-
 variable "td_pm" {
   description = "task description port mapping"
   type = list(object({
@@ -157,10 +142,20 @@ variable "vpc_id" {
 
 variable "sgr_ingress" {
   description = "security group rules - ingress"
-  type        = list(map(string))
+  type = list(object({
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    description = string
+  }))
 }
 
 variable "sgr_egress" {
   description = "security group rules - egress"
-  type        = list(map(string))
+  type = list(object({
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_blocks = string
+  }))
 }

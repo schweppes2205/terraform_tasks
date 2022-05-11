@@ -32,8 +32,8 @@ resource "aws_security_group_rule" "my_sg_ingress" {
   for_each = { for item in local.sgr_ingress : join("-", [
     "aws_security_group_rule_ingress",
     md5(join("-", [
-      item.from_port,
-      item.to_port,
+      tostring(item.from_port),
+      tostring(item.to_port),
       item.protocol,
       item.description,
     ])),
@@ -51,8 +51,8 @@ resource "aws_security_group_rule" "my_sg_egress" {
   for_each = { for item in local.sgr_egress : join("-", [
     "aws_security_group_rule_egress",
     md5(join("-", [
-      item.from_port,
-      item.to_port,
+      tostring(item.from_port),
+      tostring(item.to_port),
       item.protocol,
       item.cidr_blocks,
     ]))
