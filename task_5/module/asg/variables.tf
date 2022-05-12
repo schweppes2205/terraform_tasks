@@ -1,26 +1,14 @@
-#################
-#for datasources#
-#################
-
-variable "ami_param" {
-  description = "ami image parameters"
-  type = object({
-    most_recent  = bool
-    name_regex   = string
-    owners       = list(string)
-    architecture = list(string)
-  })
-  default = {
-    most_recent  = true
-    name_regex   = "amzn2-ami-kernel"
-    owners       = ["amazon"]
-    architecture = ["x86_64"]
-  }
+variable "image_id" {
+  description = "image id"
+  type        = string
+  default     = ""
 }
 
-###############
-#for resources#
-###############
+variable "ami_platform_details" {
+  description = "image platform details"
+  type        = string
+  default     = ""
+}
 
 variable "launch_config_name" {
   description = "launch configuration name"

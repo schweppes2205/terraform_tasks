@@ -2,16 +2,6 @@
 #DATASOURCES#
 #############
 
-data "aws_ami" "ami" {
-  most_recent = var.ami_param.most_recent
-  name_regex  = var.ami_param.name_regex
-  owners      = var.ami_param.owners
-  filter {
-    name   = "architecture"
-    values = var.ami_param.architecture
-  }
-}
-
 data "aws_iam_policy_document" "ecs_agent" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -30,8 +20,7 @@ data "aws_iam_policy_document" "ecs_agent" {
 
 locals {
   tags_asg = merge(var.tags, {
-    # Date_creation = timestamp(),
-    OS_type = data.aws_ami.ami.platform_details
+    OS_type = var.ami_platform_details
   })
 }
 
@@ -39,7 +28,6 @@ locals {
 #RESOURCES#
 ###########
 
-# instance role creation for ecs ec2 agents
 resource "aws_iam_role" "ecs_agent" {
   name               = "ecs-agent"
   assume_role_policy = data.aws_iam_policy_document.ecs_agent.json
@@ -57,7 +45,7 @@ resource "aws_iam_instance_profile" "ecs_agent" {
 
 resource "aws_launch_configuration" "launch_config" {
   name                 = var.launch_config_name
-  image_id             = data.aws_ami.ami.image_id
+  image_id             = var.image_id
   iam_instance_profile = aws_iam_instance_profile.ecs_agent.name
   instance_type        = var.instance_type
   key_name             = var.key_name

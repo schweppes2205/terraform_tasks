@@ -29,6 +29,27 @@ data "aws_subnets" "subnets" {
   }
 }
 
+data "aws_ami" "ami" {
+  most_recent = var.ami_param.most_recent
+  name_regex  = var.ami_param.name_regex
+  owners      = var.ami_param.owners
+  filter {
+    name   = "architecture"
+    values = var.ami_param.architecture
+  }
+}
+
+###########
+#VARIABLES#
+###########
+
+locals {
+  tags = merge(var.tags, {
+    # Date_creation  = timestamp()
+    AWS_Account_ID = data.aws_caller_identity.current.account_id
+  })
+}
+
 ###########
 #RESOURCES#
 ###########
@@ -36,9 +57,7 @@ data "aws_subnets" "subnets" {
 resource "aws_key_pair" "ssh_key" {
   key_name   = var.ssh_public_key.name
   public_key = var.ssh_public_key.value
-  tags = merge(var.tags, {
-    AWS_Account_ID = data.aws_caller_identity.current.account_id
-  })
+  tags       = local.tags
 }
 
 #########
@@ -50,7 +69,7 @@ module "securityGroup" {
   create_sg           = var.create_sg
   security_group_name = var.security_group_name
   vpc_id              = var.vpc_id
-  tags                = var.tags
+  tags                = local.tags
   sgr_ingress         = var.sgr_ingress
   sgr_egress          = var.sgr_egress
 }
@@ -58,7 +77,7 @@ module "securityGroup" {
 module "elasticContainerSerice" {
   source             = "./module/ecs"
   ecs_cluster_name   = var.ecs_cluster_name
-  tags               = var.tags
+  tags               = local.tags
   td_family          = var.td_family
   td_name            = var.td_name
   td_image           = var.td_image
@@ -73,20 +92,19 @@ module "elasticContainerSerice" {
 }
 
 module "autoScalingGroup" {
-  source              = "./module/asg"
-  ami_param           = var.ami_param
-  launch_config_name  = var.launch_config_name
-  instance_type       = var.instance_type
-  key_name            = aws_key_pair.ssh_key.key_name
-  asg_param           = var.asg_param
-  root_volume_param   = var.root_volume_param
-  ecs_cluster_name    = var.ecs_cluster_name
-  sg_id               = module.securityGroup.sg_id
-  instace_name        = var.instace_name
-  vpc_zone_identifier = data.aws_subnets.subnets.ids
-  tags = merge(var.tags, {
-    AWS_Account_ID = data.aws_caller_identity.current.account_id
-  })
+  source               = "./module/asg"
+  image_id             = data.aws_ami.ami.image_id
+  ami_platform_details = data.aws_ami.ami.platform_details
+  launch_config_name   = var.launch_config_name
+  instance_type        = var.instance_type
+  key_name             = aws_key_pair.ssh_key.key_name
+  asg_param            = var.asg_param
+  root_volume_param    = var.root_volume_param
+  ecs_cluster_name     = var.ecs_cluster_name
+  sg_id                = module.securityGroup.sg_id
+  instace_name         = var.instace_name
+  vpc_zone_identifier  = data.aws_subnets.subnets.ids
+  tags                 = local.tags
   depends_on = [
     module.securityGroup,
     module.elasticContainerSerice,
