@@ -51,3 +51,16 @@ Continue doing the previous task:
 5. No hardcode inside the modules. Everything should be declared as variables and all of them should be set in .tfvars file
 6. Outputs should present for all the created resources. You can choose any you prefer, but for each resource described in your code.
 7. Output of terraform apply command should be also stored in a file and committed  to your branch
+
+# 4. Terraform 13 key feature
+
+The task is to understand the key feature of TF 13.
+
+Modify the component module created in Task 3, so we can create multiple EC2 instances using map of parameters for EC2 instances. for each for modules should be used here.
+
+# 5. Working with AWS ASG and AWS ECS services
+
+1. Need to create a module for ASG (includes asg and launch configuration)
+2. Need to create a module for ECS specific resources (ECS service, ECS cluster, ECS task definition)
+3. Add user data into ASG module to include EC2 instances into ECS cluster.
+4. Deploy centos container (https://hub.docker.com/_/centos) to ECS using your modules
